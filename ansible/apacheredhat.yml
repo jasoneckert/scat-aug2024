@@ -1,0 +1,19 @@
+---
+- hosts: fedora
+  become: yes
+  become_method: sudo
+
+  vars_files:
+  - vars/linuxsecrets.yml
+
+  tasks:
+  - name: Ensure the Apache daemon is installed on Fedora
+    dnf:
+      name: httpd
+      state: present
+
+  - name: Ensure that the Apache daemon is running on Fedora
+    service:
+      name: httpd
+      state: started
+      enabled: yes

@@ -1,0 +1,22 @@
+---
+- hosts: fedora
+  become: yes
+  become_method: sudo
+
+  vars_files:
+  - vars/linuxsecrets.yml
+
+  vars:
+    daemonname: chronyd
+
+  tasks:
+  - name: Ensure the chrony NTP daemon is installed
+    dnf:
+      name: chrony
+      state: present
+
+  - name: Ensure that the chrony NTP daemon is running
+    service:
+      name: "{{ daemonname }}"
+      state: started
+      enabled: yes

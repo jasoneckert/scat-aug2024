@@ -1,0 +1,19 @@
+---
+- hosts: ubuntu
+  become: yes
+  become_method: sudo
+
+  vars_files:
+  - vars/linuxsecrets.yml
+
+  tasks:
+  - name: Ensure the Apache daemon is installed on Debian based distros
+    apt:
+      name: apache2
+      state: present
+
+  - name: Ensure that the Apache daemon is running on Debian based distros
+    service:
+      name: apache2
+      state: started
+      enabled: yes
